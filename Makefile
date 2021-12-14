@@ -8,7 +8,7 @@ INC_DIRS	= includes $(FT_DIR)
 SRCS		= $(shell find $(SRC_DIR) -type f -name "*.c")
 OBJS 		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 INC_FLAGS	= $(addprefix -I, $(INC_DIRS))
-WARN_FLAGS	= -Wall -Wextra -Werror
+WARN_FLAGS	= -Wall -Wextra -Werror -Imlx
 DEBUG_FLAGS = -g
 
 CFLAGS		= $(WARN_FLAGS) $(INC_FLAGS)
@@ -38,7 +38,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 # Linking
 $(NAME):	$(OBJS)
 			@echo "Creating binary: $@"
-			@$(CC) $^ -o $(NAME) $(LDFLAGS)
+			@$(CC) $^ -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(LDFLAGS)
 
 #Cleaning
 clean:

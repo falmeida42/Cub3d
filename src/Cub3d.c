@@ -2,5 +2,10 @@
 
 int main(void)
 {
-    printf("Cub3d falmeida\n");
+   t_game   game;
+
+   init_game(&game);
+   init_mlx(game.mlx);
+   end_game(&game);
+   return (0);
 }
