@@ -2,12 +2,11 @@
 
 void    init_game(t_game *game)
 {
-    game = malloc(sizeof(t_game));
-    game->mlx = malloc(sizeof(t_mlx));
+    game->data = malloc(sizeof(t_data));
 }
 
 void    end_game(t_game *game)
 {
-    free(game->mlx);
+    free(game->data);
     free(game);
 }
