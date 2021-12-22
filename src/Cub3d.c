@@ -158,9 +158,9 @@ void  calc(t_info *info)
       if (side == 1)
          color = color / 2;
 
-      drawSky(info, x, drawStart);
+      //drawSky(info, x, drawStart);
       verLine(info, x, drawStart, drawEnd, color);
-      drawFloor(info, x, drawEnd);
+      //drawFloor(info, x, drawEnd);
       x++;
    }
 }
@@ -168,6 +168,45 @@ void  calc(t_info *info)
 int   main_loop(t_info *info)
 {
    calc(info);
+   return (0);
+}
+
+int   keyPress(int key, t_info *info)
+{
+   if (key == W)
+   {
+      if (worldMap[(int)(info->posX + info->dirY * info->moveSpeed)][(int)info->posY] == false)
+         info->posX += info->dirX * info->moveSpeed;
+      if (worldMap[(int)info->posX][(int)(info->posY + info->dirY * info->moveSpeed)] == false)
+         info->posY += info->dirY * info->moveSpeed;
+   }
+   if (key == S)
+   {
+      if (worldMap[(int)(info->posX - info->dirX * info->moveSpeed)][(int)info->posY] == false)
+         info->posX -= info->dirX * info->moveSpeed;
+      if (worldMap[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)] == false)
+         info->posY -= info->dirY * info->moveSpeed;
+   }
+   if (key == D)
+   {
+      double oldDirX = info->dirX;
+      info->dirX = info->dirX * cos(-info->rotSpeed) - info->dirY * sin(-info->rotSpeed);
+      info->dirY = oldDirX * sin(-info->rotSpeed) + info->dirY * cos(-info->rotSpeed);
+      double oldPlaneX = info->planeX;
+      info->planeX = info->planeX * cos(-info->rotSpeed) - info->planeY * sin(-info->rotSpeed);
+      info->planeY = oldPlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
+   }
+   if (key == A)
+   {
+      double oldDirX = info->dirX;
+      info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
+      info->dirY = oldDirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
+      double oldPlaneX = info->planeX;
+      info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
+      info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
+   }
+   if (key == ESC)
+      exit(0);
    return (0);
 }
 
@@ -186,7 +225,9 @@ int main(void)
    info.rotSpeed = 0.05;
 
    info.win = mlx_new_window(info.mlx, width, height, "Cub3d");
-
+   info.img = mlx_new_image(info.mlx, width, height);
+   info.addr = mlx_get_data_addr(info.img, &info.bits_per_pixel, &info.line_length, &info.endian);
    mlx_loop_hook(info.mlx, &main_loop, &info);
+   mlx_hook(info.win, 2, 1L << 0, &keyPress, &info);
    mlx_loop(info.mlx);
 }
