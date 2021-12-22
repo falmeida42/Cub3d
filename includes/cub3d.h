@@ -15,6 +15,22 @@
 # define D 2
 # define ESC 53
 
+typedef struct s_dda
+{
+    double cameraX;
+    double rayDirX;
+    double rayDirY;
+    int   mapX;
+    int   mapY;
+    double   sideDistX;
+    double   sideDistY;
+    double   deltaDistX;
+    double   deltaDistY;
+    double   perpWallDist;
+    int   stepX;
+    int   stepY;
+}   t_dda;
+
 typedef struct s_info
 {
     double  posX;
@@ -34,7 +50,12 @@ typedef struct s_info
     int     line_length;
     int     endian;
     int     **mapWorld;
+    t_dda   dda;
 }   t_info;
+
+//DDA
+void  calc(t_info *info);
+//DDA
 
 //DRAW
 void  my_mlx_pixel_put(t_info *info, int x, int y, int color);
