@@ -28,6 +28,15 @@ int   worldMap[mapWidth][mapHeight] =
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
+void  my_mlx_pixel_put(t_info *info, int x, int y, int color)
+{
+   char  *dst;
+
+   info->addr = mlx_get_data_addr(info->img, &info->bits_per_pixel, &info->line_length, &info->endian);
+   dst = info->addr + (y * info->line_length + x * (info->bits_per_pixel / 8));
+   *(unsigned int *)dst = color;
+}
+
 void  drawSky(t_info *info, int x, int y)
 {
    int   i;
@@ -35,7 +44,7 @@ void  drawSky(t_info *info, int x, int y)
    i = 0;
    while (i < y)
    {
-      mlx_pixel_put(info->mlx, info->win, x, i, 0x00BFFF);
+      my_mlx_pixel_put(info, x, i, 0x00BFFF);
       i++;
    }
 }
@@ -47,7 +56,7 @@ void  drawFloor(t_info *info, int x, int y)
    i = height;
    while (i > y)
    {
-      mlx_pixel_put(info->mlx, info->win, x, i, 0x957A56);
+      my_mlx_pixel_put(info, x, i, 0x957A56);
       i--;
    }
 }
@@ -59,7 +68,7 @@ void  verLine(t_info *info, int x, int y1, int y2, int color)
    i = y1;
    while (i <= y2)
    {
-      mlx_pixel_put(info->mlx, info->win, x, i, color);
+      my_mlx_pixel_put(info, x, i, color);
       i++;
    }
 }
@@ -158,9 +167,9 @@ void  calc(t_info *info)
       if (side == 1)
          color = color / 2;
 
-      //drawSky(info, x, drawStart);
+      drawSky(info, x, drawStart);
       verLine(info, x, drawStart, drawEnd, color);
-      //drawFloor(info, x, drawEnd);
+      drawFloor(info, x, drawEnd);
       x++;
    }
 }
@@ -168,6 +177,7 @@ void  calc(t_info *info)
 int   main_loop(t_info *info)
 {
    calc(info);
+   mlx_put_image_to_window(info->mlx, info->win, info->img, 0, 0);
    return (0);
 }
 
@@ -227,7 +237,9 @@ int main(void)
    info.win = mlx_new_window(info.mlx, width, height, "Cub3d");
    info.img = mlx_new_image(info.mlx, width, height);
    info.addr = mlx_get_data_addr(info.img, &info.bits_per_pixel, &info.line_length, &info.endian);
+   
    mlx_loop_hook(info.mlx, &main_loop, &info);
    mlx_hook(info.win, 2, 1L << 0, &keyPress, &info);
+   
    mlx_loop(info.mlx);
 }
