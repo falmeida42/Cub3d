@@ -33,6 +33,18 @@ typedef struct s_info
     int     bits_per_pixel;
     int     line_length;
     int     endian;
+    int     **mapWorld;
 }   t_info;
+
+//DRAW
+void  my_mlx_pixel_put(t_info *info, int x, int y, int color);
+void  drawSky(t_info *info, int x, int y);
+void  drawFloor(t_info *info, int x, int y);
+void  verLine(t_info *info, int x, int y1, int y2, int color);
+//DRAW
+
+//MOVIMENTS
+int   keyPress(int key, t_info *info);
+//MOVIMENTS
 
 #endif
