@@ -4,7 +4,7 @@ int   keyPress(int key, t_info *info)
 {
    if (key == W)
    {
-      if (info->mapWorld[(int)(info->posX + info->dirY * info->moveSpeed)][(int)info->posY] == false)
+      if (info->mapWorld[(int)(info->posX + info->dirX * info->moveSpeed)][(int)info->posY] == false)
          info->posX += info->dirX * info->moveSpeed;
       if (info->mapWorld[(int)info->posX][(int)(info->posY + info->dirY * info->moveSpeed)] == false)
          info->posY += info->dirY * info->moveSpeed;
