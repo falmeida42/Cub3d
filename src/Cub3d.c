@@ -7,44 +7,6 @@ int   main_loop(t_info *info)
    return (0);
 }
 
-void  create_mapWorld(t_info *info)
-{
-   int   i;
-   int   j;
-   info->mapWorld = malloc(sizeof(int *) * mapHeight);
-   
-   i = 0;
-   while (i < mapHeight)
-   {
-      info->mapWorld[i] = malloc(sizeof(int) * mapWidth);
-      i++;
-   }
-   i = 0;
-   while (i < mapHeight)
-   {
-      j = 0;
-      while (j < mapWidth)
-      {
-         if (i == 0 || i == mapHeight - 1)
-            info->mapWorld[i][j] = 1;
-         else if (j == 0 || j == mapWidth - 1)
-            info->mapWorld[i][j] = 1;
-         else if (j == 10 && i == 15)
-            info->mapWorld[i][j] = 2;
-         else if (j == 12 && i == 17)
-            info->mapWorld[i][j] = 3;
-         else if (j == 5 && i == 4)
-            info->mapWorld[i][j] = 4;
-         else if (j == 13 && i == 9)
-            info->mapWorld[i][j] = 2;
-         else
-            info->mapWorld[i][j] = 0;
-         j++;
-      }
-      i++;
-   }
-}
-
 void  init_variables(t_info *info)
 {
    info->mlx = mlx_init();
@@ -62,12 +24,22 @@ int   main(void)
 {
    t_info   info;
 
+   printf("Initializing variables\n");
    init_variables(&info);
+   printf("Variables initialized\n");
+   printf("Creating mapWorld\n");
    create_mapWorld(&info);
+   printf("MapWorld created\n");
+   printf("Initializing Mlx\n");
    info.win = mlx_new_window(info.mlx, width, height, "Cub3d");
    info.img = mlx_new_image(info.mlx, width, height);
    info.addr = mlx_get_data_addr(info.img, &info.bits_per_pixel, &info.line_length, &info.endian);
+   printf("Mlx initialized\n");
+   printf("Mlx Loop_hook\n");
    mlx_loop_hook(info.mlx, &main_loop, &info);
+   printf("Mlx info.win\n");
    mlx_hook(info.win, 2, 1L << 0, &keyPress, &info);
+   printf("Mlx info\n");
    mlx_loop(info.mlx);
+   printf("End\n");
 }

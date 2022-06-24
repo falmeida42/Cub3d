@@ -68,4 +68,9 @@ void  verLine(t_info *info, int x, int y1, int y2, int color);
 int   keyPress(int key, t_info *info);
 //MOVIMENTS
 
+//MEMORY
+void  create_mapWorld(t_info *info);
+void    delete_mapWorld(t_info *info);
+//MEMORY
+
 #endif

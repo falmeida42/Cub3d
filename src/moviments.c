@@ -35,6 +35,9 @@ int   keyPress(int key, t_info *info)
       info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
    }
    if (key == ESC)
+   {
+      delete_mapWorld(info);
       exit(0);
+   }
    return (0);
 }

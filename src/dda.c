@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include <stdio.h>
 
 void    initial_side_dist_calc(t_dda *dda, double posX, double posY)
 {
