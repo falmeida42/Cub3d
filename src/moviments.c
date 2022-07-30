@@ -1,7 +1,9 @@
 #include "cub3d.h"
+#include <stdio.h>
 
 int   keyPress(int key, t_info *info)
 {
+   printf("%d\n", key);
    if (key == W)
    {
       if (info->mapWorld[(int)(info->posX + info->dirX * info->moveSpeed)][(int)info->posY] == false)

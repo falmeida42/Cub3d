@@ -38,7 +38,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 # Linking
 $(NAME):	$(OBJS)
 			@echo "Creating binary: $@"
-			@$(CC) $^ -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(LDFLAGS)
+			@$(CC) $^  -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz  -o $(NAME) $(LDFLAGS)
 
 #Cleaning
 clean:

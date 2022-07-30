@@ -3,17 +3,17 @@
 
 # include <stdbool.h>
 # include <math.h>
-# include <mlx.h>
+# include <../mlx_linux/mlx.h>
 # include "libft.h"
 # define mapWidth 24
 # define mapHeight 24
 # define width 640
 # define height 480
-# define W 13
-# define S 1
-# define A 0
-# define D 2
-# define ESC 53
+# define W 119
+# define S 115
+# define A 97
+# define D 100
+# define ESC 65307
 
 typedef struct s_dda
 {
